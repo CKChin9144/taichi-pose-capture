@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>太极动作抓拍</title>
+<meta name="theme-color" content="#f4efe4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4efe4;--card:#fffdf8;--ink:#1f1b16;--ink2:#6b6155;--line:#e4dbc9;
+  --red:#b5382b;--red2:#952c21;--jade:#2f7d5b;--gold:#c8962e;
+  --stage:#12100e;--r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans SC",system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
+body{padding-bottom:env(safe-area-inset-bottom)}
+button,input,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.top{padding:22px 16px 6px;max-width:960px;margin:0 auto}
+.brand{display:flex;gap:12px;align-items:center}
+.seal{width:46px;height:46px;border-radius:10px;background:var(--red);color:#fff7ea;display:grid;place-items:center;font-family:"Noto Serif SC",serif;font-size:26px;font-weight:700;box-shadow:inset 0 0 0 3px #fff7ea33}
+h1{font-family:"Noto Serif SC",serif;font-size:22px;margin:0;letter-spacing:2px}
+.brand p{margin:2px 0 0;color:var(--ink2);font-size:13px}
+.tabs{display:flex;gap:6px;max-width:960px;margin:12px auto 0;padding:0 16px;position:sticky;top:0;background:var(--paper);z-index:5;padding-top:6px;padding-bottom:8px}
+.tabs button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 0;font-weight:500;cursor:pointer}
+.tabs button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+main{max-width:960px;margin:0 auto;padding:6px 16px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.namecard label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ink2)}
+input[type=text],input:not([type]),input[type=number],input[type=password],select{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font-size:16px;width:100%;outline:none}
+input:focus,select:focus{border-color:var(--red)}
+h2.sec{font-family:"Noto Serif SC",serif;font-size:17px;margin:22px 0 10px;letter-spacing:1px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.pose{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;text-align:left;padding:0;transition:transform .15s,box-shadow .15s}
+.pose:active{transform:scale(.98)}
+.pose:hover{box-shadow:0 6px 18px #0000000f}
+.thumb{aspect-ratio:3/4;background:#ece4d4 center/cover no-repeat;display:grid;place-items:center;color:var(--ink2);font-family:"Noto Serif SC",serif;font-size:30px}
+.pose .meta{padding:10px 12px}
+.pose b{display:block;font-size:15px}
+.pose small{color:var(--ink2);font-size:12px}
+.empty{grid-column:1/-1;text-align:center;color:var(--ink2);padding:30px 10px;border:1px dashed var(--line);border-radius:var(--r);font-size:14px;line-height:1.7}
+.tips{margin-top:18px;font-size:13px;color:var(--ink2);line-height:1.7;background:#f9f4ea}
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:500;cursor:pointer;background:#ece4d4}
+.btn.primary{background:var(--red);color:#fff}
+.btn.primary:active{background:var(--red2)}
+.btn.dark{background:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;border:1px solid var(--line)}
+.btn.big{width:100%;padding:14px;font-size:16px}
+.btn.sm{padding:7px 12px;font-size:13px;border-radius:9px}
+.btn:disabled{opacity:.5}
+.filters{display:flex;gap:8px;margin-bottom:12px}
+.filters>*{flex:1}
+.capc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.capc img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:#ece4d4;cursor:zoom-in}
+.capc .meta{padding:8px 10px;font-size:13px;line-height:1.5}
+.capc .meta b{font-size:14px}
+.capc .meta .row{display:flex;justify-content:space-between;align-items:center;gap:6px;color:var(--ink2)}
+.score{display:inline-block;background:#e7f2ec;color:var(--jade);border-radius:6px;padding:0 6px;font-weight:700;font-size:12px}
+.del{background:none;border:0;color:var(--red);font-size:12px;cursor:pointer;padding:2px 0}
+.adm{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;margin-bottom:10px}
+.adm .thumb{width:84px;flex:none;border-radius:10px}
+.adm .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.adm .nm{font-weight:700}
+.adm .line{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--ink2)}
+.adm .line input{width:74px;padding:6px 8px;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--ink2)}
+.chip.on{background:var(--jade);border-color:var(--jade);color:#fff}
+.pinrow{display:flex;gap:8px;margin-top:10px}
+.muted{color:var(--ink2);font-size:13px;line-height:1.6}
+
+/* ===== Stage ===== */
+#stage{position:fixed;inset:0;background:var(--stage);color:#f3ece0;z-index:50;display:flex;flex-direction:column}
+.sbar{display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 10px 8px}
+#sTitle{flex:1;text-align:center;font-family:"Noto Serif SC",serif;font-size:17px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ibtn{width:40px;height:40px;border-radius:50%;border:0;background:#ffffff1a;color:#fff;font-size:18px;cursor:pointer;flex:none}
+.ibtn.on{background:var(--gold);color:#1a140c}
+.smid{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#vwrap{position:relative;line-height:0;max-height:100%}
+#vwrap.mirror{transform:scaleX(-1)}
+#video{display:block;max-width:100vw;max-height:calc(100dvh - 250px);background:#000}
+#overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#refFloat{position:absolute;top:10px;left:10px;width:84px;border-radius:10px;border:2px solid #ffffffcc;box-shadow:0 4px 14px #0008;object-fit:cover;aspect-ratio:3/4;background:#333}
+#ring{position:absolute;top:10px;right:10px;width:76px;height:76px}
+#ring svg{transform:rotate(-90deg)}
+#ring .lbl{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:18px}
+#count{position:absolute;inset:0;display:grid;place-items:center;font-family:"Noto Serif SC",serif;font-size:120px;color:#fff;text-shadow:0 4px 30px #000;pointer-events:none}
+#sMsg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#000b;padding:14px 18px;border-radius:12px;font-size:15px;text-align:center;max-width:80%;line-height:1.6}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#flash.go{animation:fl .5s ease-out}
+@keyframes fl{0%{opacity:.95}100%{opacity:0}}
+.spanel{padding:12px 14px calc(14px + env(safe-area-inset-bottom));background:#1c1916;border-top:1px solid #ffffff14}
+.spanel .row{display:flex;gap:8px;align-items:center}
+.spanel .row>.btn{flex:1}
+.spanel label{font-size:13px;color:#cfc4b2}
+.spanel input,.spanel select{background:#2a2622;border-color:#3a342e;color:#f3ece0}
+.hint{font-size:20px;font-weight:700;text-align:center;min-height:30px;margin:2px 0 8px;font-family:"Noto Serif SC",serif}
+.hint.ok{color:#7fd6a8}
+.bar{height:10px;background:#ffffff1a;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--gold),#5cc290);transition:width .2s}
+.jlist{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;justify-content:center}
+.jlist span{font-size:12px;padding:3px 8px;border-radius:99px;background:#ffffff14}
+.jlist span.ok{background:#2f7d5b55;color:#a9ecc8}
+.jlist span.bad{background:#b5382b66;color:#ffd2cb}
+.done{display:flex;gap:12px;align-items:center}
+.done img{width:84px;aspect-ratio:3/4;object-fit:cover;border-radius:10px;background:#333}
+.done .txt{flex:1;font-size:14px;line-height:1.6}
+.done .txt b{font-size:17px}
+.spanel .chip{background:#2a2622;border-color:#3a342e;color:#cfc4b2}
+.spanel .chip.on{background:var(--jade);border-color:var(--jade);color:#fff}
+.frame{font-size:13px;margin:6px 0}
+.frame.ok{color:#7fd6a8}.frame.bad{color:#ffb4a8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#lightbox{position:fixed;inset:0;background:#000e;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;color:#fff}
+#lightbox img{max-width:100%;max-height:80vh;border-radius:10px}
+#lightbox .cap{margin-top:10px;text-align:center;font-size:14px;line-height:1.6}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:10px;font-size:14px;z-index:100;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+#toast.show{opacity:1}
+@media (min-width:700px){#video{max-height:calc(100dvh - 230px)}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="seal">太</span><div><h1>太极动作抓拍</h1><p>做到标准姿势并停稳，系统自动拍照</p></div></div>
+</header>
+<nav class="tabs">
+  <button data-tab="practice" class="on">练习</button>
+  <button data-tab="records">记录</button>
+  <button data-tab="teacher">老师</button>
+</nav>
+<main>
+  <section id="tab-practice">
+    <div class="card namecard"><label>学员姓名<input id="studentName" placeholder="请输入你的名字" maxlength="30" autocomplete="name"></label></div>
+    <h2 class="sec">选择要练习的动作</h2>
+    <div id="poseGrid" class="grid"><div class="empty">载入中…</div></div>
+    <div class="card tips">📱 把手机固定好（可靠墙或用支架），退后到<b>头到脚全身入镜</b>。光线充足、背景简洁，识别会更准。按「开始」后有倒数时间让你走到位置。</div>
+  </section>
+
+  <section id="tab-records" hidden>
+    <div class="filters"><select id="fPose"></select><input id="fName" placeholder="搜索学员姓名"></div>
+    <div id="capGrid" class="grid"></div>
+  </section>
+
+  <section id="tab-teacher" hidden>
+    <div id="lockBox" class="card">
+      <b>老师模式</b>
+      <p class="muted">录制标准动作、调整判定标准、删除记录。请输入老师密码。</p>
+      <div class="pinrow"><input id="pin" type="password" inputmode="numeric" placeholder="老师密码"><button id="btnUnlock" class="btn dark">进入</button></div>
+    </div>
+    <div id="teacherBox" hidden>
+      <button id="btnNewPose" class="btn primary big">＋ 录制新的标准动作</button>
+      <p class="muted" style="margin-top:8px">做法：老师自己（或示范学员）站到镜头前摆好标准姿势，系统会记下身体各关节的角度。学员练习时就以此为标准比对。</p>
+      <h2 class="sec">已有的标准动作</h2>
+      <div id="poseAdmin"></div>
+      <button id="btnLock" class="btn ghost" style="margin-top:12px">退出老师模式</button>
+    </div>
+  </section>
+</main>
+
+<div id="stage" hidden>
+  <div class="sbar">
+    <button id="sClose" class="ibtn" aria-label="关闭">✕</button>
+    <div id="sTitle"></div>
+    <button id="sVoice" class="ibtn" aria-label="语音提示">🔈</button>
+    <button id="sFlip" class="ibtn" aria-label="切换镜头">⇆</button>
+  </div>
+  <div class="smid">
+    <div id="vwrap" class="mirror"><video id="video" playsinline muted autoplay></video><canvas id="overlay"></canvas></div>
+    <img id="refFloat" alt="标准动作" hidden>
+    <div id="ring" hidden>
+      <svg width="76" height="76" viewBox="0 0 76 76"><circle cx="38" cy="38" r="32" fill="#000a" stroke="#ffffff22" stroke-width="7"/><circle id="ringArc" cx="38" cy="38" r="32" fill="none" stroke="#5cc290" stroke-width="7" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="201"/></svg>
+      <div class="lbl" id="ringLbl">0</div>
+    </div>
+    <div id="count" hidden></div>
+    <div id="sMsg" hidden></div>
+    <div id="flash"></div>
+  </div>
+  <div class="spanel">
+    <!-- 学员：准备 -->
+    <div id="pPrep" hidden>
+      <div class="row" style="margin-bottom:10px">
+        <label style="flex:1">倒数准备时间
+          <select id="prepSec"><option value="5">5 秒</option><option value="10" selected>10 秒</option><option value="15">15 秒</option></select>
+        </label>
+      </div>
+      <button id="btnStart" class="btn primary big">开始</button>
+    </div>
+    <!-- 学员：进行中 -->
+    <div id="pLive" hidden>
+      <div id="hint" class="hint">…</div>
+      <div class="bar"><i id="barFill"></i></div>
+      <div id="jlist" class="jlist"></div>
+    </div>
+    <!-- 学员：拍好了 -->
+    <div id="pDone" hidden>
+      <div class="done"><img id="doneImg" alt=""><div class="txt"><b>拍好了！</b><br><span id="doneStatus">上传中…</span></div></div>
+      <div class="row" style="margin-top:12px"><button id="btnAgain" class="btn primary">再来一次</button><button id="btnBack" class="btn">换动作</button></div>
+    </div>
+    <!-- 老师：设置 -->
+    <div id="rSetup" hidden>
+      <div class="grid2">
+        <label>动作名称<input id="rName" placeholder="例如：单鞭" maxlength="30"></label>
+        <label>倒数时间<select id="rSec"><option value="5">5 秒</option><option value="10" selected>10 秒</option><option value="15">15 秒</option></select></label>
+      </div>
+      <label style="display:block;margin-top:8px">要比对的关节（点选开关）</label>
+      <div id="rJoints" class="chips" style="margin-top:6px"></div>
+      <div id="rFrame" class="frame">等待画面…</div>
+      <button id="btnRec" class="btn primary big">倒数后录制标准动作</button>
+    </div>
+    <!-- 老师：确认 -->
+    <div id="rReview" hidden>
+      <div class="done"><img id="revImg" alt=""><div class="txt"><b id="revName"></b><div id="revAngles" class="jlist" style="justify-content:flex-start"></div></div></div>
+      <div class="row" style="margin-top:12px"><button id="btnSavePose" class="btn primary">保存这个动作</button><button id="btnRedo" class="btn">重录</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="lightbox" hidden><img alt=""><div class="cap"></div></div>
+<div id="toast"></div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { PoseLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs';
+
+const SUPA_URL = 'https://dywzhlcsdrrvdwbapiqk.supabase.co';
+const SUPA_KEY = 'sb_publishable_E5MwhNCreyn5eq9Vf4uvNw_7O6zH2zW';
+const BUCKET = 'taichi-photos';
+const TEACHER_PIN = '8888';
+const sb = createClient(SUPA_URL, SUPA_KEY);
+const pub = p => p ? `${SUPA_URL}/storage/v1/object/public/${BUCKET}/${p}` : '';
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v === null ? d : v; }catch{ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, v); }catch{} }
+};
+const sess = {
+  get(k){ try{ return sessionStorage.getItem(k); }catch{ return null; } },
+  set(k, v){ try{ v===null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); }catch{} }
+};
+let toastT;
+function toast(msg, ms = 2600){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), ms); }
+
+/* ---------- 关节定义（MediaPipe 33 点） ---------- */
+const JOINTS = {
+  lShoulder:{ name:'左肩', pts:[23,11,13], type:'shoulder' },
+  rShoulder:{ name:'右肩', pts:[24,12,14], type:'shoulder' },
+  lElbow:   { name:'左肘', pts:[11,13,15], type:'elbow' },
+  rElbow:   { name:'右肘', pts:[12,14,16], type:'elbow' },
+  lHip:     { name:'左髋', pts:[11,23,25], type:'hip' },
+  rHip:     { name:'右髋', pts:[12,24,26], type:'hip' },
+  lKnee:    { name:'左膝', pts:[23,25,27], type:'knee' },
+  rKnee:    { name:'右膝', pts:[24,26,28], type:'knee' },
+};
+const JKEYS = Object.keys(JOINTS);
+const BONES = [[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28],[27,31],[28,32],[27,29],[28,30]];
+const BODY_PTS = [0,11,12,13,14,15,16,23,24,25,26,27,28];
+
+function hintFor(k, cur, tgt){
+  const j = JOINTS[k], over = cur > tgt;
+  switch(j.type){
+    case 'knee': return j.name + (over ? ' 再弯一点' : ' 伸直一点');
+    case 'elbow': return j.name + (over ? ' 再屈一点' : ' 伸展一点');
+    case 'shoulder': return j.name[0] + '手 ' + (over ? '放低一点' : '抬高一点');
+    case 'hip': return j.name + (over ? ' 再坐低一点' : ' 身体立起一点');
+  }
+}
+function angleAt(a, b, c, W, H){
+  const v1x=(a.x-b.x)*W, v1y=(a.y-b.y)*H, v2x=(c.x-b.x)*W, v2y=(c.y-b.y)*H;
+  const d = Math.atan2(v1x*v2y - v1y*v2x, v1x*v2x + v1y*v2y);
+  return Math.abs(d) * 180 / Math.PI;
+}
+function computeAngles(lm, W, H){
+  const angles = {}, vis = {};
+  for(const k of JKEYS){
+    const [a,b,c] = JOINTS[k].pts.map(i => lm[i]);
+    angles[k] = angleAt(a,b,c,W,H);
+    vis[k] = Math.min(a.visibility ?? 1, b.visibility ?? 1, c.visibility ?? 1);
+  }
+  return { angles, vis };
+}
+
+/* ---------- 数据 ---------- */
+let poses = [], captures = [];
+let isTeacher = sess.get('taichi_teacher') === '1';
+
+async function loadPoses(){
+  const { data, error } = await sb.from('taichi_poses').select('*').order('sort_order').order('created_at');
+  if(error){ $('#poseGrid').innerHTML = `<div class="empty">载入失败：${esc(error.message)}</div>`; return; }
+  poses = data || [];
+  renderPoseGrid(); renderAdmin(); renderPoseFilter();
+}
+async function loadCaptures(){
+  const { data, error } = await sb.from('taichi_captures').select('*').order('created_at', { ascending:false }).limit(300);
+  if(error){ $('#capGrid').innerHTML = `<div class="empty">载入失败：${esc(error.message)}</div>`; return; }
+  captures = data || []; renderCaptures();
+}
+function renderPoseGrid(){
+  const g = $('#poseGrid');
+  if(!poses.length){ g.innerHTML = `<div class="empty">还没有标准动作。<br>请老师到「老师」页录制第一个动作。</div>`; return; }
+  g.innerHTML = poses.map(p => `
+    <button class="pose" data-id="${p.id}">
+      <div class="thumb" style="${p.ref_photo_path ? `background-image:url('${pub(p.ref_photo_path)}')` : ''}">${p.ref_photo_path ? '' : '式'}</div>
+      <div class="meta"><b>${esc(p.name)}</b><small>比对 ${p.joints.length} 个关节 · 容差 ±${p.tolerance}°</small></div>
+    </button>`).join('');
+  g.querySelectorAll('.pose').forEach(b => b.onclick = () => {
+    const name = $('#studentName').value.trim();
+    if(!name){ toast('请先输入学员姓名'); $('#studentName').focus(); return; }
+    openPractice(poses.find(p => p.id === b.dataset.id));
+  });
+}
+function renderPoseFilter(){
+  const sel = $('#fPose'), cur = sel.value;
+  sel.innerHTML = `<option value="">全部动作</option>` + poses.map(p => `<option value="${esc(p.name)}">${esc(p.name)}</option>`).join('');
+  sel.value = cur;
+}
+function fmtTime(s){ return new Date(s).toLocaleString('zh-CN', { month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit' }); }
+function renderCaptures(){
+  const fp = $('#fPose').value, fn = $('#fName').value.trim().toLowerCase();
+  const list = captures.filter(c => (!fp || c.pose_name === fp) && (!fn || c.student_name.toLowerCase().includes(fn)));
+  const g = $('#capGrid');
+  if(!list.length){ g.innerHTML = `<div class="empty">还没有抓拍记录</div>`; return; }
+  g.innerHTML = list.map(c => `
+    <div class="capc">
+      <img loading="lazy" src="${pub(c.photo_path)}" data-id="${c.id}" alt="">
+      <div class="meta">
+        <b>${esc(c.student_name)}</b>
+        <div class="row"><span>${esc(c.pose_name)}</span>${c.score != null ? `<span class="score">${Math.round(c.score)}分</span>` : ''}</div>
+        <div class="row"><span>${fmtTime(c.created_at)}</span>${isTeacher ? `<button class="del" data-del="${c.id}">删除</button>` : ''}</div>
+      </div>
+    </div>`).join('');
+  g.querySelectorAll('img[data-id]').forEach(im => im.onclick = () => {
+    const c = captures.find(x => x.id === im.dataset.id);
+    const lb = $('#lightbox'); lb.querySelector('img').src = im.src;
+    lb.querySelector('.cap').innerHTML = `<b>${esc(c.student_name)}</b> · ${esc(c.pose_name)}<br>${fmtTime(c.created_at)}${c.score != null ? ` · ${Math.round(c.score)}分` : ''}`;
+    lb.hidden = false;
+  });
+  g.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
+    const c = captures.find(x => x.id === b.dataset.del);
+    if(!confirm(`删除 ${c.student_name} 的「${c.pose_name}」照片？`)) return;
+    await sb.storage.from(BUCKET).remove([c.photo_path]);
+    const { error } = await sb.from('taichi_captures').delete().eq('id', c.id);
+    if(error) return toast('删除失败：' + error.message);
+    captures = captures.filter(x => x.id !== c.id); renderCaptures(); toast('已删除');
+  });
+}
+$('#lightbox').onclick = () => $('#lightbox').hidden = true;
+$('#fPose').onchange = renderCaptures;
+$('#fName').oninput = renderCaptures;
+
+function renderAdmin(){
+  const box = $('#poseAdmin');
+  if(!poses.length){ box.innerHTML = `<div class="empty">还没有标准动作</div>`; return; }
+  box.innerHTML = poses.map(p => `
+    <div class="adm" data-id="${p.id}">
+      <div class="thumb" style="${p.ref_photo_path ? `background-image:url('${pub(p.ref_photo_path)}')` : ''}">${p.ref_photo_path ? '' : '式'}</div>
+      <div class="body">
+        <div class="line"><input class="nmIn" value="${esc(p.name)}" style="flex:1;width:auto;font-weight:700;color:var(--ink)"></div>
+        <div class="line">容差 ±<input type="number" class="tolIn" min="5" max="45" value="${p.tolerance}">° &nbsp; 停稳 <input type="number" class="holdIn" min="0.3" max="5" step="0.1" value="${(p.hold_ms/1000).toFixed(1)}"> 秒</div>
+        <div class="chips">${JKEYS.map(k => `<span class="chip ${p.joints.includes(k) ? 'on' : ''}" data-k="${k}">${JOINTS[k].name} ${Math.round(p.angles[k])}°</span>`).join('')}</div>
+        <div class="line"><button class="btn sm dark sv">保存修改</button><button class="btn sm ghost rm" style="color:var(--red)">删除动作</button></div>
+      </div>
+    </div>`).join('');
+  box.querySelectorAll('.adm').forEach(el => {
+    const p = poses.find(x => x.id === el.dataset.id);
+    el.querySelectorAll('.chip').forEach(c => c.onclick = () => c.classList.toggle('on'));
+    el.querySelector('.sv').onclick = async () => {
+      const joints = [...el.querySelectorAll('.chip.on')].map(c => c.dataset.k);
+      if(!joints.length) return toast('至少要选一个关节');
+      const upd = {
+        name: el.querySelector('.nmIn').value.trim() || p.name,
+        tolerance: Math.max(5, Math.min(45, parseInt(el.querySelector('.tolIn').value) || 15)),
+        hold_ms: Math.round(Math.max(0.3, Math.min(5, parseFloat(el.querySelector('.holdIn').value) || 1)) * 1000),
+        joints
+      };
+      const { error } = await sb.from('taichi_poses').update(upd).eq('id', p.id);
+      if(error) return toast('保存失败：' + error.message);
+      toast('已保存'); loadPoses();
+    };
+    el.querySelector('.rm').onclick = async () => {
+      if(!confirm(`删除标准动作「${p.name}」？（学员已拍的照片会保留）`)) return;
+      if(p.ref_photo_path) await sb.storage.from(BUCKET).remove([p.ref_photo_path]);
+      const { error } = await sb.from('taichi_poses').delete().eq('id', p.id);
+      if(error) return toast('删除失败：' + error.message);
+      toast('已删除'); loadPoses();
+    };
+  });
+}
+
+/* ---------- 分页 & 老师登录 ---------- */
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  for(const t of ['practice','records','teacher']) $('#tab-' + t).hidden = t !== b.dataset.tab;
+  if(b.dataset.tab === 'records') loadCaptures();
+});
+function applyTeacher(){ $('#lockBox').hidden = isTeacher; $('#teacherBox').hidden = !isTeacher; }
+$('#btnUnlock').onclick = () => {
+  if($('#pin').value === TEACHER_PIN){ isTeacher = true; sess.set('taichi_teacher','1'); applyTeacher(); renderCaptures(); $('#pin').value=''; }
+  else toast('密码不对');
+};
+$('#pin').onkeydown = e => { if(e.key === 'Enter') $('#btnUnlock').click(); };
+$('#btnLock').onclick = () => { isTeacher = false; sess.set('taichi_teacher', null); applyTeacher(); renderCaptures(); };
+$('#studentName').value = store.get('taichi_student', '');
+$('#studentName').oninput = e => store.set('taichi_student', e.target.value.trim());
+
+/* ---------- 声音 ---------- */
+let actx;
+function beep(f = 880, d = .12, v = .2){
+  try{
+    actx ||= new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.frequency.value = f; g.gain.value = v; o.connect(g); g.connect(actx.destination);
+    o.start(); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + d); o.stop(actx.currentTime + d);
+  }catch{}
+}
+let voiceOn = store.get('taichi_voice', '1') === '1';
+function updVoiceBtn(){ $('#sVoice').textContent = voiceOn ? '🔊' : '🔈'; $('#sVoice').classList.toggle('on', voiceOn); }
+$('#sVoice').onclick = () => { voiceOn = !voiceOn; store.set('taichi_voice', voiceOn ? '1' : '0'); updVoiceBtn(); if(!voiceOn) speechSynthesis?.cancel(); };
+let lastSay = 0, lastSayText = '';
+function say(text, force = false){
+  if(!voiceOn || !window.speechSynthesis) return;
+  const now = Date.now();
+  if(!force && (now - lastSay < 3500 || (text === lastSayText && now - lastSay < 6000))) return;
+  lastSay = now; lastSayText = text;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = 1.05;
+  speechSynthesis.speak(u);
+}
+
+/* ---------- 模型 & 镜头 ---------- */
+const video = $('#video'), canvas = $('#overlay'), ctx = canvas.getContext('2d');
+let landmarker = null, stream = null, facing = 'user', running = false, lastVT = -1, wakeLock = null;
+function msg(t){ const m = $('#sMsg'); if(t){ m.innerHTML = t; m.hidden = false; } else m.hidden = true; }
+
+async function ensureModel(){
+  if(landmarker) return;
+  msg('正在载入动作识别模型…<br><small>第一次会比较久</small>');
+  const fs = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
+  const opts = d => ({ baseOptions:{ modelAssetPath:'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task', delegate:d }, runningMode:'VIDEO', numPoses:1 });
+  try{ landmarker = await PoseLandmarker.createFromOptions(fs, opts('GPU')); }
+  catch{ landmarker = await PoseLandmarker.createFromOptions(fs, opts('CPU')); }
+}
+async function startCam(){
+  stopCam();
+  msg('正在打开镜头…');
+  stream = await navigator.mediaDevices.getUserMedia({ audio:false, video:{ facingMode:facing, width:{ ideal:1280 }, height:{ ideal:720 } } });
+  video.srcObject = stream;
+  await video.play();
+  if(!video.videoWidth) await new Promise(r => video.onloadedmetadata = r);
+  canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+  $('#vwrap').classList.toggle('mirror', facing === 'user');
+  msg('');
+}
+function stopCam(){ if(stream){ stream.getTracks().forEach(t => t.stop()); stream = null; } }
+$('#sFlip').onclick = async () => { facing = facing === 'user' ? 'environment' : 'user'; try{ await startCam(); }catch(e){ msg('切换镜头失败：' + esc(e.message)); } };
+
+/* ---------- 舞台 ---------- */
+let mode = null, target = null, phase = null, smooth = null, holdStart = 0, timers = [];
+const PANELS = ['pPrep','pLive','pDone','rSetup','rReview'];
+function showPanel(id){ PANELS.forEach(p => $('#' + p).hidden = p !== id); }
+function clearTimers(){ timers.forEach(clearTimeout); timers = []; $('#count').hidden = true; }
+
+async function openStage(m, title){
+  mode = m; $('#sTitle').textContent = title; $('#stage').hidden = false; document.body.style.overflow = 'hidden';
+  updVoiceBtn(); smooth = null; holdStart = 0; setRing(0, false);
+  try{
+    await ensureModel();
+    await startCam();
+  }catch(e){
+    msg('无法使用镜头或载入模型：<br>' + esc(e.message || e) + '<br><small>请允许浏览器使用摄像头，然后重试</small>'); return false;
+  }
+  running = true; requestAnimationFrame(loop);
+  try{ wakeLock = await navigator.wakeLock?.request('screen'); }catch{}
+  return true;
+}
+function closeStage(){
+  running = false; clearTimers(); stopCam(); speechSynthesis?.cancel();
+  try{ wakeLock?.release(); }catch{} wakeLock = null;
+  $('#stage').hidden = true; document.body.style.overflow = '';
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+$('#sClose').onclick = () => { closeStage(); if(mode === 'practice') loadCaptures(); };
+
+function countdown(sec, done){
+  clearTimers();
+  const c = $('#count'); c.hidden = false;
+  for(let i = 0; i <= sec; i++){
+    timers.push(setTimeout(() => {
+      const left = sec - i;
+      if(left === 0){ c.hidden = true; beep(1320, .2); done(); }
+      else { c.textContent = left; beep(left <= 3 ? 990 : 660, .08, .12); if(left <= 3) say(String(left), true); }
+    }, i * 1000));
+  }
+}
+function setRing(p, show = true){
+  $('#ring').hidden = !show;
+  $('#ringArc').style.strokeDashoffset = 201 * (1 - Math.max(0, Math.min(1, p)));
+}
+
+function draw(lm, status){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!lm) return;
+  const W = canvas.width, H = canvas.height, s = Math.max(W, H) / 300;
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 3 * s; ctx.strokeStyle = 'rgba(255,255,255,.75)';
+  for(const [a,b] of BONES){
+    if((lm[a].visibility ?? 1) < .3 || (lm[b].visibility ?? 1) < .3) continue;
+    ctx.beginPath(); ctx.moveTo(lm[a].x*W, lm[a].y*H); ctx.lineTo(lm[b].x*W, lm[b].y*H); ctx.stroke();
+  }
+  for(const i of BODY_PTS){
+    if((lm[i].visibility ?? 1) < .3) continue;
+    ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(lm[i].x*W, lm[i].y*H, 3.2*s, 0, 7); ctx.fill();
+  }
+  if(status){
+    for(const k in status){
+      const p = lm[JOINTS[k].pts[1]];
+      ctx.fillStyle = status[k] === 'ok' ? '#3fd08a' : status[k] === 'bad' ? '#ff5a45' : '#999';
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5*s;
+      ctx.beginPath(); ctx.arc(p.x*W, p.y*H, 7*s, 0, 7); ctx.fill(); ctx.stroke();
+    }
+  }
+}
+
+function loop(){
+  if(!running) return;
+  requestAnimationFrame(loop);
+  if(video.readyState < 2 || !landmarker) return;
+  if(video.currentTime === lastVT) return;
+  lastVT = video.currentTime;
+  let res;
+  try{ res = landmarker.detectForVideo(video, performance.now()); }catch{ return; }
+  const lm = res?.landmarks?.[0] || null;
+  let A = null;
+  if(lm){
+    const r = computeAngles(lm, canvas.width, canvas.height);
+    if(!smooth) smooth = { ...r.angles };
+    else for(const k of JKEYS) smooth[k] = smooth[k] * .55 + r.angles[k] * .45;
+    A = { angles: smooth, raw: r.angles, vis: r.vis };
+  } else smooth = null;
+  if(mode === 'practice') onPractice(lm, A);
+  else onRecord(lm, A);
+}
+
+/* ---------- 学员练习 ---------- */
+function openPractice(p){
+  target = p;
+  const rf = $('#refFloat');
+  if(p.ref_photo_path){ rf.src = pub(p.ref_photo_path); rf.hidden = false; } else rf.hidden = true;
+  $('#prepSec').value = store.get('taichi_prep', '10');
+  phase = 'prep'; showPanel('pPrep');
+  openStage('practice', p.name);
+}
+$('#btnStart').onclick = () => {
+  beep(660, .05, .05);
+  store.set('taichi_prep', $('#prepSec').value);
+  phase = 'countdown'; showPanel('pLive');
+  $('#hint').textContent = '准备…走到位置'; $('#hint').className = 'hint'; $('#barFill').style.width = '0';
+  say('请就位，倒数开始', true);
+  countdown(parseInt($('#prepSec').value), () => { phase = 'live'; holdStart = 0; say('开始，摆出' + target.name, true); });
+};
+
+function evaluate(A){
+  const tol = target.tolerance, status = {}, parts = [];
+  let worst = null, worstD = -1, missing = [], sum = 0;
+  for(const k of target.joints){
+    if(A.vis[k] < .5){ status[k] = 'miss'; missing.push(JOINTS[k].name); continue; }
+    const cur = A.angles[k], tgt = target.angles[k], d = Math.abs(cur - tgt);
+    const sc = d <= tol ? 1 - .3 * d / tol : Math.max(0, .7 - .7 * (d - tol) / (tol * 2));
+    sum += sc;
+    status[k] = d <= tol ? 'ok' : 'bad';
+    if(d > tol && d - tol > worstD){ worstD = d - tol; worst = k; }
+    parts.push(k);
+  }
+  const score = target.joints.length ? sum / target.joints.length * 100 : 0;
+  return { status, score, worst, missing, ok: !missing.length && !worst };
+}
+
+function onPractice(lm, A){
+  if(phase !== 'live'){ draw(lm, null); return; }
+  const hint = $('#hint');
+  if(!A){ draw(null); hint.textContent = '看不到人，请退后让全身入镜'; hint.className = 'hint'; holdStart = 0; setRing(0, false); $('#barFill').style.width = '0'; say('请退后，让全身入镜'); return; }
+  const ev = evaluate(A);
+  draw(lm, ev.status);
+  $('#barFill').style.width = ev.score.toFixed(0) + '%';
+  $('#jlist').innerHTML = target.joints.map(k => `<span class="${ev.status[k] === 'ok' ? 'ok' : ev.status[k] === 'bad' ? 'bad' : ''}">${JOINTS[k].name}</span>`).join('');
+  if(ev.missing.length){
+    hint.textContent = '看不清：' + ev.missing.join('、'); hint.className = 'hint';
+    holdStart = 0; setRing(0, false); say('请让全身入镜'); return;
+  }
+  if(ev.ok){
+    const now = performance.now();
+    if(!holdStart){ holdStart = now; beep(1046, .06, .08); }
+    const prog = (now - holdStart) / target.hold_ms;
+    setRing(prog, true); $('#ringLbl').textContent = Math.round(ev.score);
+    hint.textContent = '很好！保持住…'; hint.className = 'hint ok';
+    if(prog >= 1) doCapture(ev.score, A.raw);
+  } else {
+    holdStart = 0; setRing(0, false);
+    const h = hintFor(ev.worst, A.angles[ev.worst], target.angles[ev.worst]);
+    hint.textContent = h; hint.className = 'hint'; say(h);
+  }
+}
+
+function grabFrame(){
+  const W = video.videoWidth, H = video.videoHeight, sc = Math.min(1, 1080 / Math.max(W, H));
+  const c = document.createElement('canvas'); c.width = Math.round(W * sc); c.height = Math.round(H * sc);
+  const g = c.getContext('2d');
+  if(facing === 'user'){ g.translate(c.width, 0); g.scale(-1, 1); }
+  g.drawImage(video, 0, 0, c.width, c.height);
+  return new Promise(r => c.toBlob(r, 'image/jpeg', .86));
+}
+const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+
+let pendingCap = null;
+async function doCapture(score, angles){
+  phase = 'captured'; setRing(1, true);
+  $('#flash').classList.remove('go'); void $('#flash').offsetWidth; $('#flash').classList.add('go');
+  beep(1568, .25, .25); say('拍好了，很标准', true);
+  const blob = await grabFrame();
+  $('#doneImg').src = URL.createObjectURL(blob);
+  showPanel('pDone');
+  pendingCap = { blob, score, angles, pose: target, student: $('#studentName').value.trim() };
+  uploadCapture();
+}
+async function uploadCapture(){
+  const c = pendingCap; if(!c) return;
+  const st = $('#doneStatus'); st.textContent = '上传中…';
+  try{
+    const path = `captures/${rid()}.jpg`;
+    const up = await sb.storage.from(BUCKET).upload(path, c.blob, { contentType:'image/jpeg' });
+    if(up.error) throw up.error;
+    const ins = await sb.from('taichi_captures').insert({
+      pose_id: c.pose.id, pose_name: c.pose.name, student_name: c.student,
+      score: Math.round(c.score * 10) / 10,
+      angles: Object.fromEntries(Object.entries(c.angles).map(([k,v]) => [k, Math.round(v)])),
+      photo_path: path
+    });
+    if(ins.error) throw ins.error;
+    st.innerHTML = `得分 <b style="font-size:14px">${Math.round(c.score)}</b> · 已保存到记录 ✓`;
+    pendingCap = null;
+  }catch(e){
+    st.innerHTML = `上传失败：${esc(e.message || e)} <button class="btn sm" id="btnRetry">重试</button>`;
+    $('#btnRetry').onclick = uploadCapture;
+  }
+}
+$('#btnAgain').onclick = () => { setRing(0, false); phase = 'prep'; showPanel('pPrep'); };
+$('#btnBack').onclick = () => { closeStage(); loadCaptures(); };
+
+/* ---------- 老师录制标准动作 ---------- */
+let recJoints = new Set(JKEYS), samples = [], sampleStart = 0, recResult = null;
+function renderRecChips(){
+  $('#rJoints').innerHTML = JKEYS.map(k => `<span class="chip ${recJoints.has(k) ? 'on' : ''}" data-k="${k}">${JOINTS[k].name}</span>`).join('');
+  $('#rJoints').querySelectorAll('.chip').forEach(c => c.onclick = () => { recJoints.has(c.dataset.k) ? recJoints.delete(c.dataset.k) : recJoints.add(c.dataset.k); renderRecChips(); });
+}
+$('#btnNewPose').onclick = () => {
+  $('#refFloat').hidden = true; $('#rName').value = ''; recJoints = new Set(JKEYS); renderRecChips();
+  phase = 'setup'; showPanel('rSetup'); openStage('record', '录制标准动作');
+};
+$('#btnRec').onclick = () => {
+  if(!$('#rName').value.trim()){ toast('请先填动作名称'); $('#rName').focus(); return; }
+  if(!recJoints.size){ toast('至少选一个关节'); return; }
+  beep(660, .05, .05);
+  phase = 'countdown'; $('#btnRec').disabled = true;
+  say('请就位，摆好标准动作', true);
+  countdown(parseInt($('#rSec').value), () => { phase = 'sampling'; samples = []; sampleStart = performance.now(); $('#rFrame').textContent = '录制中，保持不动…'; });
+};
+function onRecord(lm, A){
+  draw(lm, A ? Object.fromEntries([...recJoints].map(k => [k, A.vis[k] >= .5 ? 'ok' : 'miss'])) : null);
+  const fr = $('#rFrame');
+  if(phase === 'setup' || phase === 'countdown'){
+    if(!lm){ fr.textContent = '画面中看不到人'; fr.className = 'frame bad'; return; }
+    const miss = [...recJoints].filter(k => A.vis[k] < .5).map(k => JOINTS[k].name);
+    if(miss.length){ fr.textContent = '看不清：' + miss.join('、') + '（请退后，全身入镜）'; fr.className = 'frame bad'; }
+    else { fr.textContent = '✓ 全身入镜，可以录制'; fr.className = 'frame ok'; }
+    return;
+  }
+  if(phase === 'sampling'){
+    if(A && [...recJoints].every(k => A.vis[k] >= .5)) samples.push(A.raw);
+    const el = performance.now() - sampleStart;
+    if(samples.length >= 20) finishSampling();
+    else if(el > 5000){
+      phase = 'setup'; $('#btnRec').disabled = false;
+      toast('看不清全身，请调整位置后重录'); say('看不清，请重录', true);
+    }
+  }
+}
+async function finishSampling(){
+  phase = 'review';
+  const avg = {};
+  for(const k of JKEYS){
+    const vals = samples.map(s => s[k]).sort((a,b) => a-b);
+    const trim = vals.slice(Math.floor(vals.length*.15), Math.ceil(vals.length*.85));
+    avg[k] = trim.reduce((a,b) => a+b, 0) / trim.length;
+  }
+  beep(1568, .25, .25); say('录好了', true);
+  $('#flash').classList.remove('go'); void $('#flash').offsetWidth; $('#flash').classList.add('go');
+  const blob = await grabFrame();
+  recResult = { blob, angles: avg, joints: [...recJoints], name: $('#rName').value.trim() };
+  $('#revImg').src = URL.createObjectURL(blob);
+  $('#revName').textContent = recResult.name;
+  $('#revAngles').innerHTML = recResult.joints.map(k => `<span class="ok">${JOINTS[k].name} ${Math.round(avg[k])}°</span>`).join('');
+  showPanel('rReview'); $('#btnRec').disabled = false;
+}
+$('#btnRedo').onclick = () => { phase = 'setup'; showPanel('rSetup'); };
+$('#btnSavePose').onclick = async () => {
+  const r = recResult; if(!r) return;
+  const btn = $('#btnSavePose'); btn.disabled = true; btn.textContent = '保存中…';
+  try{
+    const path = `refs/${rid()}.jpg`;
+    const up = await sb.storage.from(BUCKET).upload(path, r.blob, { contentType:'image/jpeg' });
+    if(up.error) throw up.error;
+    const ins = await sb.from('taichi_poses').insert({
+      name: r.name, ref_photo_path: path,
+      angles: Object.fromEntries(Object.entries(r.angles).map(([k,v]) => [k, Math.round(v*10)/10])),
+      joints: r.joints, tolerance: 15, hold_ms: 1000, sort_order: poses.length
+    });
+    if(ins.error) throw ins.error;
+    toast(`「${r.name}」已保存`); closeStage(); loadPoses();
+  }catch(e){ toast('保存失败：' + (e.message || e)); }
+  btn.disabled = false; btn.textContent = '保存这个动作';
+};
+
+/* ---------- 启动 ---------- */
+applyTeacher();
+loadPoses();
+document.addEventListener('visibilitychange', async () => {
+  if(document.visibilityState === 'visible' && running){ try{ wakeLock = await navigator.wakeLock?.request('screen'); }catch{} }
+});
+</script>
+</body>
+</html>

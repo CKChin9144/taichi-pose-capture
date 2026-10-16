@@ -127,6 +127,32 @@ h2.sec{font-family:"Noto Serif SC",serif;font-size:17px;margin:22px 0 10px;lette
 #lightbox .cap{margin-top:10px;text-align:center;font-size:14px;line-height:1.6}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:10px;font-size:14px;z-index:100;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
 #toast.show{opacity:1}
+.ann{margin-bottom:12px;background:#fff8e6;border-color:#ecd9a8;font-size:14px;line-height:1.7;white-space:pre-wrap}
+.ann b{color:var(--red)}
+.warn{background:#fdecea;border-color:#f3c2bb;color:#8a2a1f;font-size:14px;margin-bottom:12px}
+.setsec{margin-top:12px;padding:0}
+.setsec>summary{cursor:pointer;padding:14px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.setsec>summary::after{content:'▾';color:var(--ink2)}
+.setsec[open]>summary::after{content:'▴'}
+.setsec .in{padding:0 14px 14px;display:flex;flex-direction:column;gap:10px}
+.fld{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink2)}
+.fld textarea{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink);resize:vertical;min-height:70px;outline:none}
+.fld textarea:focus{border-color:var(--red)}
+.radio{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--ink);line-height:1.5;cursor:pointer}
+.radio input{margin-top:4px;accent-color:var(--red)}
+.stu{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--line)}
+.stu:last-child{border-bottom:0}
+.stu .nm{flex:1;min-width:0;font-size:15px}
+.ib{border:1px solid var(--line);background:#fff;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--ink2)}
+.ib.red{color:var(--red)}
+.row2{display:flex;gap:8px}
+.row2>*{flex:1}
+.adm textarea{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font:inherit;font-size:14px;width:100%;min-height:48px;resize:vertical}
+.pose .note{display:block;margin-top:4px;color:var(--ink2);font-size:12px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pnote{font-size:14px;line-height:1.6;color:#e9dcc3;background:#ffffff10;border-radius:10px;padding:8px 12px;margin-bottom:10px}
+.pnote b{color:var(--gold)}
+#recNote{margin:0 0 10px}
+.pinrow .btn{white-space:nowrap;flex:none}
 #zoomBar{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:#000a;border:1px solid #ffffff22;border-radius:999px;padding:6px 10px;z-index:3;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 #zoomBar .zb{width:34px;height:34px;border-radius:50%;border:0;background:#ffffff22;color:#fff;font-size:20px;line-height:1;cursor:pointer}
 #zoomBar input{width:min(38vw,180px);accent-color:var(--gold)}
@@ -138,7 +164,7 @@ h2.sec{font-family:"Noto Serif SC",serif;font-size:17px;margin:22px 0 10px;lette
 <body>
 <header class="top">
   <div class="bagua"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 6"/><g transform="translate(100 100) rotate(0) translate(0 -94)"><rect x="-16" y="15.2" width="32" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="32" height="4.4" rx="1.1"/><rect x="-16" y="0" width="32" height="4.4" rx="1.1"/></g><g transform="translate(100 100) rotate(45) translate(0 -94)"><rect x="-16" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="32" height="4.4" rx="1.1"/><rect x="-16" y="0" width="32" height="4.4" rx="1.1"/></g><g transform="translate(100 100) rotate(90) translate(0 -94)"><rect x="-16" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="32" height="4.4" rx="1.1"/><rect x="-16" y="0" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="0" width="13.44" height="4.4" rx="1.1"/></g><g transform="translate(100 100) rotate(135) translate(0 -94)"><rect x="-16" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="0" width="32" height="4.4" rx="1.1"/></g><g transform="translate(100 100) rotate(180) translate(0 -94)"><rect x="-16" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="15.2" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="0" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="0" width="13.44" height="4.4" rx="1.1"/></g><g transform="translate(100 100) rotate(225) translate(0 -94)"><rect x="-16" y="15.2" width="32" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="0" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="0" width="13.44" height="4.4" rx="1.1"/></g><g transform="translate(100 100) rotate(270) translate(0 -94)"><rect x="-16" y="15.2" width="32" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="7.6" width="13.44" height="4.4" rx="1.1"/><rect x="-16" y="0" width="32" height="4.4" rx="1.1"/></g><g transform="translate(100 100) rotate(315) translate(0 -94)"><rect x="-16" y="15.2" width="32" height="4.4" rx="1.1"/><rect x="-16" y="7.6" width="32" height="4.4" rx="1.1"/><rect x="-16" y="0" width="13.44" height="4.4" rx="1.1"/><rect x="2.56" y="0" width="13.44" height="4.4" rx="1.1"/></g><circle cx="100" cy="100" r="54" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="100" cy="100" r="46" fill="transparent" stroke="currentColor" stroke-width="2.76"/><path d="M100 54 A46 46 0 0 1 100 146 A23 23 0 0 1 100 100 A23 23 0 0 0 100 54Z" fill="currentColor"/><circle cx="100" cy="77" r="5.98" fill="currentColor"/><circle cx="100" cy="123" r="5.98" fill="transparent"/></svg></div>
-  <div class="brand"><span class="seal">太</span><div><h1>太极动作抓拍</h1><p>做到标准姿势并停稳，系统自动拍照</p></div></div>
+  <div class="brand"><span class="seal">太</span><div><h1 id="hTitle">太极动作抓拍</h1><p id="hSub">做到标准姿势并停稳，系统自动拍照</p></div></div>
 </header>
 <nav class="tabs">
   <button data-tab="practice" class="on">练习</button>
@@ -146,8 +172,9 @@ h2.sec{font-family:"Noto Serif SC",serif;font-size:17px;margin:22px 0 10px;lette
   <button data-tab="teacher">老师</button>
 </nav>
 <main>
+  <div id="annBox" class="card ann" hidden></div>
   <section id="tab-practice">
-    <div class="card namecard"><label>学员姓名<input id="studentName" placeholder="请输入你的名字" maxlength="30" autocomplete="name"></label></div>
+    <div class="card namecard"><label>学员姓名<select id="studentPick" hidden></select><input id="studentName" placeholder="请输入你的名字" maxlength="30" autocomplete="name"></label></div>
     <h2 class="sec">选择要练习的动作</h2>
     <div id="poseGrid" class="grid"><div class="empty">载入中…</div></div>
     <div class="card tips">📱 把手机固定好（可靠墙或用支架），退后到<b>头到脚全身入镜</b>。光线充足、背景简洁，识别会更准。按「开始」后有倒数时间让你走到位置。</div>
@@ -155,6 +182,7 @@ h2.sec{font-family:"Noto Serif SC",serif;font-size:17px;margin:22px 0 10px;lette
 
   <section id="tab-records" hidden>
     <div class="filters"><select id="fPose"></select><input id="fName" placeholder="搜索学员姓名"></div>
+    <p id="recNote" class="muted" hidden></p>
     <div id="capGrid" class="grid"></div>
   </section>
 
@@ -165,10 +193,43 @@ h2.sec{font-family:"Noto Serif SC",serif;font-size:17px;margin:22px 0 10px;lette
       <div class="pinrow"><input id="pin" type="password" inputmode="numeric" placeholder="老师密码"><button id="btnUnlock" class="btn dark">进入</button></div>
     </div>
     <div id="teacherBox" hidden>
+      <div id="pinWarn" class="card warn" hidden>⚠️ 老师密码还是预设的 8888，任何人都猜得到。请到最下方「修改老师密码」换一个。</div>
       <button id="btnNewPose" class="btn primary big">＋ 录制新的标准动作</button>
       <p class="muted" style="margin-top:8px">做法：老师自己（或示范学员）站到镜头前摆好标准姿势，系统会记下身体各关节的角度。学员练习时就以此为标准比对。</p>
       <h2 class="sec">已有的标准动作</h2>
       <div id="poseAdmin"></div>
+      <h2 class="sec">设定</h2>
+      <details class="card setsec"><summary>基本资料</summary><div class="in">
+        <label class="fld">老师名字<input id="sTeacher" maxlength="40" placeholder="例如：陈志光"></label>
+        <label class="fld">课程名称（显示在最上方）<input id="sClass" maxlength="40" placeholder="例如：新山太极班"></label>
+        <label class="fld">标语<input id="sMotto" maxlength="80" placeholder="例如：松静自然，以柔克刚"></label>
+        <label class="fld">公告（学员打开 app 就会看到，留空就不显示）<textarea id="sAnn" maxlength="300" placeholder="例如：下星期二网课练习单鞭，请先练熟。"></textarea></label>
+        <button class="btn dark" id="btnSaveBasic">保存基本资料</button>
+      </div></details>
+      <details class="card setsec"><summary>练习默认值</summary><div class="in">
+        <label class="fld">倒数准备时间<select id="sPrep"><option value="5">5 秒</option><option value="10">10 秒</option><option value="15">15 秒</option><option value="20">20 秒</option></select></label>
+        <div class="row2">
+          <label class="fld">新动作的容差（度）<input id="sTol" type="number" min="5" max="45"></label>
+          <label class="fld">要停稳几秒<input id="sHold" type="number" min="0.3" max="5" step="0.1"></label>
+        </div>
+        <p class="muted" style="margin:0">容差越大越容易过关。容差和停稳秒数只套用在之后新录的动作；已有的动作请在上面个别调整。</p>
+        <button class="btn dark" id="btnSaveDef">保存默认值</button>
+      </div></details>
+      <details class="card setsec"><summary>记录页隐私</summary><div class="in">
+        <label class="radio"><input type="radio" name="sPriv" value="private"><span><b>只有老师看得到全部照片</b><br><span class="muted">学员只看得到自己的记录（建议）</span></span></label>
+        <label class="radio"><input type="radio" name="sPriv" value="public"><span><b>所有人都看得到全部照片</b><br><span class="muted">适合大家互相观摩</span></span></label>
+        <button class="btn dark" id="btnSavePriv">保存</button>
+      </div></details>
+      <details class="card setsec"><summary>学员名单</summary><div class="in">
+        <p class="muted" style="margin:0">建立名单后，学员在「练习」页直接点选自己的名字，不会打错字。名单是空的话，学员可以自己输入名字。</p>
+        <div class="pinrow" style="margin:0"><input id="stuNew" maxlength="30" placeholder="学员名字"><button class="btn dark" id="btnAddStu">加入</button></div>
+        <div id="stuList"></div>
+      </div></details>
+      <details class="card setsec" id="pinSec"><summary>修改老师密码</summary><div class="in">
+        <label class="fld">新密码（至少 4 个字）<input id="pinNew" type="password" autocomplete="new-password"></label>
+        <label class="fld">再输入一次<input id="pinNew2" type="password" autocomplete="new-password"></label>
+        <button class="btn primary" id="btnChangePin">修改密码</button>
+      </div></details>
       <button id="btnLock" class="btn ghost" style="margin-top:12px">退出老师模式</button>
     </div>
   </section>
@@ -196,11 +257,12 @@ h2.sec{font-family:"Noto Serif SC",serif;font-size:17px;margin:22px 0 10px;lette
     <div id="zoomBar" hidden><button id="zOut" class="zb" aria-label="缩小">−</button><input id="zRange" type="range" aria-label="镜头缩放"><button id="zIn" class="zb" aria-label="放大">＋</button><span id="zLbl">1.0×</span></div>
   </div>
   <div class="spanel">
+    <div id="poseNote" class="pnote" hidden></div>
     <!-- 学员：准备 -->
     <div id="pPrep" hidden>
       <div class="row" style="margin-bottom:10px">
         <label style="flex:1">倒数准备时间
-          <select id="prepSec"><option value="5">5 秒</option><option value="10" selected>10 秒</option><option value="15">15 秒</option></select>
+          <select id="prepSec"><option value="5">5 秒</option><option value="10" selected>10 秒</option><option value="15">15 秒</option><option value="20">20 秒</option></select>
         </label>
       </div>
       <button id="btnStart" class="btn primary big">开始</button>
@@ -245,7 +307,6 @@ import { PoseLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@m
 const SUPA_URL = 'https://dywzhlcsdrrvdwbapiqk.supabase.co';
 const SUPA_KEY = 'sb_publishable_E5MwhNCreyn5eq9Vf4uvNw_7O6zH2zW';
 const BUCKET = 'taichi-photos';
-const TEACHER_PIN = '8888';
 const sb = createClient(SUPA_URL, SUPA_KEY);
 const pub = p => p ? `${SUPA_URL}/storage/v1/object/public/${BUCKET}/${p}` : '';
 
@@ -303,7 +364,52 @@ function computeAngles(lm, W, H){
 
 /* ---------- 数据 ---------- */
 let poses = [], captures = [];
-let isTeacher = sess.get('taichi_teacher') === '1';
+let teacherPin = sess.get('taichi_pin') || '';
+let isTeacher = !!teacherPin, pinDefault = false;
+let settings = { teacher_name:'', class_name:'太极动作抓拍', motto:'做到标准姿势并停稳，系统自动拍照', announcement:'', default_prep_sec:10, default_tolerance:15, default_hold_ms:1000, records_public:false };
+let students = [];
+const errMsg = e => (e && (e.message || e.error_description)) || String(e);
+async function rpc(fn, args){
+  const { data, error } = await sb.rpc(fn, args);
+  if(error){
+    if(/老师密码不正确/.test(error.message) && isTeacher){ logoutTeacher(); }
+    throw error;
+  }
+  return data;
+}
+async function loadSettings(){
+  const { data } = await sb.from('taichi_settings').select('*').eq('id', 1).maybeSingle();
+  if(data) settings = data;
+  renderHeader(); fillSettingsForm();
+}
+function renderHeader(){
+  const cls = settings.class_name || '太极动作抓拍';
+  $('#hTitle').textContent = cls;
+  document.title = cls;
+  const tn = (settings.teacher_name || '').trim();
+  const who = tn ? (/(老师|老師|师父|師父|教练|教練)$/.test(tn) ? tn : tn + ' 老师') : '';
+  $('#hSub').textContent = [who, settings.motto].filter(Boolean).join(' · ') || '做到标准姿势并停稳，系统自动拍照';
+  const ann = (settings.announcement || '').trim();
+  $('#annBox').hidden = !ann;
+  $('#annBox').innerHTML = ann ? '<b>📢 公告</b>　' + esc(ann) : '';
+}
+async function loadStudents(){
+  const { data } = await sb.from('taichi_students').select('*').order('sort_order').order('created_at');
+  students = data || [];
+  renderStudentPick(); renderStudentsAdmin();
+}
+function renderStudentPick(){
+  const sel = $('#studentPick'), inp = $('#studentName');
+  const saved = store.get('taichi_student', '');
+  if(students.length){
+    sel.innerHTML = '<option value="">— 请点选你的名字 —</option>' + students.map(x => `<option value="${esc(x.name)}">${esc(x.name)}</option>`).join('');
+    sel.value = students.some(x => x.name === saved) ? saved : '';
+    inp.value = sel.value;
+    sel.hidden = false; inp.hidden = true;
+  } else {
+    sel.hidden = true; inp.hidden = false; inp.value = saved;
+  }
+}
 
 async function loadPoses(){
   const { data, error } = await sb.from('taichi_poses').select('*').order('sort_order').order('created_at');
@@ -312,7 +418,8 @@ async function loadPoses(){
   renderPoseGrid(); renderAdmin(); renderPoseFilter();
 }
 async function loadCaptures(){
-  const { data, error } = await sb.from('taichi_captures').select('*').order('created_at', { ascending:false }).limit(300);
+  const me = $('#studentName').value.trim();
+  const { data, error } = await sb.rpc('taichi_list_captures', { p_pin: teacherPin || null, p_student: me || null });
   if(error){ $('#capGrid').innerHTML = `<div class="empty">载入失败：${esc(error.message)}</div>`; return; }
   captures = data || []; renderCaptures();
 }
@@ -322,11 +429,11 @@ function renderPoseGrid(){
   g.innerHTML = poses.map(p => `
     <button class="pose" data-id="${p.id}">
       <div class="thumb" style="${p.ref_photo_path ? `background-image:url('${pub(p.ref_photo_path)}')` : ''}">${p.ref_photo_path ? '' : '式'}</div>
-      <div class="meta"><b>${esc(p.name)}</b><small>比对 ${p.joints.length} 个关节 · 容差 ±${p.tolerance}°</small></div>
+      <div class="meta"><b>${esc(p.name)}</b><small>比对 ${p.joints.length} 个关节 · 容差 ±${p.tolerance}°</small>${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}</div>
     </button>`).join('');
   g.querySelectorAll('.pose').forEach(b => b.onclick = () => {
     const name = $('#studentName').value.trim();
-    if(!name){ toast('请先输入学员姓名'); $('#studentName').focus(); return; }
+    if(!name){ toast(students.length ? '请先点选你的名字' : '请先输入学员姓名'); (students.length ? $('#studentPick') : $('#studentName')).focus(); return; }
     openPractice(poses.find(p => p.id === b.dataset.id));
   });
 }
@@ -340,7 +447,13 @@ function renderCaptures(){
   const fp = $('#fPose').value, fn = $('#fName').value.trim().toLowerCase();
   const list = captures.filter(c => (!fp || c.pose_name === fp) && (!fn || c.student_name.toLowerCase().includes(fn)));
   const g = $('#capGrid');
-  if(!list.length){ g.innerHTML = `<div class="empty">还没有抓拍记录</div>`; return; }
+  const mineOnly = !isTeacher && !settings.records_public;
+  const me = $('#studentName').value.trim();
+  $('#fName').hidden = mineOnly;
+  const rn = $('#recNote');
+  rn.hidden = !mineOnly;
+  rn.textContent = mineOnly ? (me ? `只显示「${me}」自己的记录。` : '') : '';
+  if(!list.length){ g.innerHTML = `<div class="empty">${mineOnly && !me ? '请先到「练习」页' + (students.length ? '点选' : '输入') + '你的名字，就能看到自己的记录。' : '还没有抓拍记录'}</div>`; return; }
   g.innerHTML = list.map(c => `
     <div class="capc">
       <img loading="lazy" src="${pub(c.photo_path)}" data-id="${c.id}" alt="">
@@ -359,9 +472,9 @@ function renderCaptures(){
   g.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
     const c = captures.find(x => x.id === b.dataset.del);
     if(!confirm(`删除 ${c.student_name} 的「${c.pose_name}」照片？`)) return;
-    await sb.storage.from(BUCKET).remove([c.photo_path]);
-    const { error } = await sb.from('taichi_captures').delete().eq('id', c.id);
-    if(error) return toast('删除失败：' + error.message);
+    let path;
+    try{ path = await rpc('taichi_delete_capture', { p_pin: teacherPin, p_id: c.id }); }catch(e){ return toast('删除失败：' + errMsg(e)); }
+    if(path) sb.storage.from(BUCKET).remove([path]).catch(() => {});
     captures = captures.filter(x => x.id !== c.id); renderCaptures(); toast('已删除');
   });
 }
@@ -376,7 +489,8 @@ function renderAdmin(){
     <div class="adm" data-id="${p.id}">
       <div class="thumb" style="${p.ref_photo_path ? `background-image:url('${pub(p.ref_photo_path)}')` : ''}">${p.ref_photo_path ? '' : '式'}</div>
       <div class="body">
-        <div class="line"><input class="nmIn" value="${esc(p.name)}" style="flex:1;width:auto;font-weight:700;color:var(--ink)"></div>
+        <div class="line"><input class="nmIn" value="${esc(p.name)}" style="flex:1;width:auto;font-weight:700;color:var(--ink)"><button class="ib up" title="往前">▲</button><button class="ib dn" title="往后">▼</button></div>
+        <textarea class="noteIn" maxlength="300" placeholder="动作要领（练习时会显示），例如：沉肩坠肘、松腰坐胯">${esc(p.note || '')}</textarea>
         <div class="line">容差 ±<input type="number" class="tolIn" min="5" max="45" value="${p.tolerance}">° &nbsp; 停稳 <input type="number" class="holdIn" min="0.3" max="5" step="0.1" value="${(p.hold_ms/1000).toFixed(1)}"> 秒</div>
         <div class="chips">${JKEYS.map(k => `<span class="chip ${p.joints.includes(k) ? 'on' : ''}" data-k="${k}">${JOINTS[k].name} ${Math.round(p.angles[k])}°</span>`).join('')}</div>
         <div class="line"><button class="btn sm dark sv">保存修改</button><button class="btn sm ghost rm" style="color:var(--red)">删除动作</button></div>
@@ -392,19 +506,27 @@ function renderAdmin(){
         name: el.querySelector('.nmIn').value.trim() || p.name,
         tolerance: Math.max(5, Math.min(45, parseInt(el.querySelector('.tolIn').value) || 15)),
         hold_ms: Math.round(Math.max(0.3, Math.min(5, parseFloat(el.querySelector('.holdIn').value) || 1)) * 1000),
-        joints
+        joints,
+        note: el.querySelector('.noteIn').value.trim()
       };
-      const { error } = await sb.from('taichi_poses').update(upd).eq('id', p.id);
-      if(error) return toast('保存失败：' + error.message);
+      try{ await rpc('taichi_update_pose', { p_pin: teacherPin, p_id: p.id, p: upd }); }catch(e){ return toast('保存失败：' + errMsg(e)); }
       toast('已保存'); loadPoses();
     };
     el.querySelector('.rm').onclick = async () => {
       if(!confirm(`删除标准动作「${p.name}」？（学员已拍的照片会保留）`)) return;
-      if(p.ref_photo_path) await sb.storage.from(BUCKET).remove([p.ref_photo_path]);
-      const { error } = await sb.from('taichi_poses').delete().eq('id', p.id);
-      if(error) return toast('删除失败：' + error.message);
+      let path;
+      try{ path = await rpc('taichi_delete_pose', { p_pin: teacherPin, p_id: p.id }); }catch(e){ return toast('删除失败：' + errMsg(e)); }
+      if(path) sb.storage.from(BUCKET).remove([path]).catch(() => {});
       toast('已删除'); loadPoses();
     };
+    const move = async d => {
+      const ids = poses.map(x => x.id), i = ids.indexOf(p.id), j = i + d;
+      if(j < 0 || j >= ids.length) return;
+      [ids[i], ids[j]] = [ids[j], ids[i]];
+      try{ await rpc('taichi_reorder_poses', { p_pin: teacherPin, p_ids: ids }); loadPoses(); }catch(e){ toast('排序失败：' + errMsg(e)); }
+    };
+    el.querySelector('.up').onclick = () => move(-1);
+    el.querySelector('.dn').onclick = () => move(1);
   });
 }
 
@@ -414,15 +536,95 @@ document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   for(const t of ['practice','records','teacher']) $('#tab-' + t).hidden = t !== b.dataset.tab;
   if(b.dataset.tab === 'records') loadCaptures();
 });
-function applyTeacher(){ $('#lockBox').hidden = isTeacher; $('#teacherBox').hidden = !isTeacher; }
-$('#btnUnlock').onclick = () => {
-  if($('#pin').value === TEACHER_PIN){ isTeacher = true; sess.set('taichi_teacher','1'); applyTeacher(); renderCaptures(); $('#pin').value=''; }
-  else toast('密码不对');
+function applyTeacher(){
+  $('#lockBox').hidden = isTeacher; $('#teacherBox').hidden = !isTeacher;
+  $('#pinWarn').hidden = !(isTeacher && pinDefault);
+  if(isTeacher){ fillSettingsForm(); renderStudentsAdmin(); }
+}
+function logoutTeacher(){
+  teacherPin = ''; isTeacher = false; pinDefault = false; sess.set('taichi_pin', null);
+  applyTeacher(); loadCaptures();
+}
+$('#btnUnlock').onclick = async () => {
+  const pin = $('#pin').value.trim(); if(!pin) return;
+  const btn = $('#btnUnlock'); btn.disabled = true;
+  try{
+    const r = await rpc('taichi_login', { p_pin: pin });
+    if(!r?.ok){ toast('密码不对'); return; }
+    teacherPin = pin; isTeacher = true; pinDefault = !!r.is_default; sess.set('taichi_pin', pin);
+    $('#pin').value = ''; applyTeacher(); loadCaptures();
+    if(pinDefault) toast('欢迎！请记得修改预设密码', 3500);
+  }catch(e){ toast('登录失败：' + errMsg(e)); }
+  finally{ btn.disabled = false; }
 };
 $('#pin').onkeydown = e => { if(e.key === 'Enter') $('#btnUnlock').click(); };
-$('#btnLock').onclick = () => { isTeacher = false; sess.set('taichi_teacher', null); applyTeacher(); renderCaptures(); };
+$('#btnLock').onclick = logoutTeacher;
 $('#studentName').value = store.get('taichi_student', '');
 $('#studentName').oninput = e => store.set('taichi_student', e.target.value.trim());
+$('#studentPick').onchange = e => { $('#studentName').value = e.target.value; store.set('taichi_student', e.target.value); };
+
+/* ---------- 老师设定 ---------- */
+function fillSettingsForm(){
+  $('#sTeacher').value = settings.teacher_name || '';
+  $('#sClass').value = settings.class_name || '';
+  $('#sMotto').value = settings.motto || '';
+  $('#sAnn').value = settings.announcement || '';
+  $('#sPrep').value = String([5,10,15,20].includes(settings.default_prep_sec) ? settings.default_prep_sec : 10);
+  $('#sTol').value = settings.default_tolerance ?? 15;
+  $('#sHold').value = ((settings.default_hold_ms ?? 1000) / 1000).toFixed(1);
+  document.querySelectorAll('input[name="sPriv"]').forEach(r => r.checked = (r.value === 'public') === !!settings.records_public);
+}
+async function saveSettings(p, btn, okMsg){
+  btn.disabled = true;
+  try{ await rpc('taichi_save_settings', { p_pin: teacherPin, p }); await loadSettings(); toast(okMsg || '已保存'); }
+  catch(e){ toast('保存失败：' + errMsg(e)); }
+  finally{ btn.disabled = false; }
+}
+$('#btnSaveBasic').onclick = e => saveSettings({ teacher_name: $('#sTeacher').value, class_name: $('#sClass').value, motto: $('#sMotto').value, announcement: $('#sAnn').value }, e.currentTarget);
+$('#btnSaveDef').onclick = e => saveSettings({ default_prep_sec: parseInt($('#sPrep').value), default_tolerance: parseInt($('#sTol').value) || 15, default_hold_ms: Math.round((parseFloat($('#sHold').value) || 1) * 1000) }, e.currentTarget);
+$('#btnSavePriv').onclick = e => { const v = document.querySelector('input[name="sPriv"]:checked')?.value; if(!v) return toast('请先选一项'); saveSettings({ records_public: v === 'public' }, e.currentTarget); };
+function renderStudentsAdmin(){
+  const box = $('#stuList');
+  if(!students.length){ box.innerHTML = '<p class="muted" style="margin:0">名单是空的。</p>'; return; }
+  box.innerHTML = students.map((x, i) => `<div class="stu" data-id="${x.id}"><span class="nm">${esc(x.name)}</span><button class="ib up" title="往前" ${i ? '' : 'disabled'}>▲</button><button class="ib dn" title="往后" ${i < students.length - 1 ? '' : 'disabled'}>▼</button><button class="ib ed" title="改名">✎</button><button class="ib red rm" title="删除">✕</button></div>`).join('');
+  box.querySelectorAll('.stu').forEach(el => {
+    const x = students.find(s => s.id === el.dataset.id);
+    const move = async d => {
+      const ids = students.map(s => s.id), i = ids.indexOf(x.id), j = i + d;
+      if(j < 0 || j >= ids.length) return;
+      [ids[i], ids[j]] = [ids[j], ids[i]];
+      try{ await rpc('taichi_reorder_students', { p_pin: teacherPin, p_ids: ids }); loadStudents(); }catch(e){ toast('排序失败：' + errMsg(e)); }
+    };
+    el.querySelector('.up').onclick = () => move(-1);
+    el.querySelector('.dn').onclick = () => move(1);
+    el.querySelector('.ed').onclick = async () => {
+      const n = prompt('修改名字', x.name); if(n === null || !n.trim() || n.trim() === x.name) return;
+      try{ await rpc('taichi_rename_student', { p_pin: teacherPin, p_id: x.id, p_name: n.trim() }); loadStudents(); toast('已修改'); }catch(e){ toast('修改失败：' + errMsg(e)); }
+    };
+    el.querySelector('.rm').onclick = async () => {
+      if(!confirm(`从名单删除「${x.name}」？（已拍的照片会保留）`)) return;
+      try{ await rpc('taichi_delete_student', { p_pin: teacherPin, p_id: x.id }); loadStudents(); }catch(e){ toast('删除失败：' + errMsg(e)); }
+    };
+  });
+}
+$('#btnAddStu').onclick = async () => {
+  const names = $('#stuNew').value.split(/[,，、\n]+/).map(t => t.trim()).filter(Boolean);
+  if(!names.length) return;
+  try{ for(const n of names) await rpc('taichi_add_student', { p_pin: teacherPin, p_name: n }); $('#stuNew').value = ''; loadStudents(); toast(`已加入 ${names.length} 位`); }
+  catch(e){ toast('加入失败：' + errMsg(e)); }
+};
+$('#stuNew').onkeydown = e => { if(e.key === 'Enter') $('#btnAddStu').click(); };
+$('#btnChangePin').onclick = async () => {
+  const a = $('#pinNew').value.trim(), b = $('#pinNew2').value.trim();
+  if(a.length < 4) return toast('新密码至少要 4 个字');
+  if(a !== b) return toast('两次输入的密码不一样');
+  try{
+    await rpc('taichi_change_pin', { p_pin: teacherPin, p_new: a });
+    teacherPin = a; sess.set('taichi_pin', a); pinDefault = false;
+    $('#pinNew').value = ''; $('#pinNew2').value = ''; applyTeacher();
+    toast('密码已修改，请记住新密码', 3500);
+  }catch(e){ toast('修改失败：' + errMsg(e)); }
+};
 
 /* ---------- 声音 ---------- */
 let actx;
@@ -621,7 +823,8 @@ function openPractice(p){
   target = p;
   const rf = $('#refFloat');
   if(p.ref_photo_path){ rf.src = pub(p.ref_photo_path); rf.hidden = false; } else rf.hidden = true;
-  $('#prepSec').value = store.get('taichi_prep', '10');
+  const pn = $('#poseNote'); pn.hidden = !p.note; pn.innerHTML = p.note ? '<b>要领</b>　' + esc(p.note) : '';
+  $('#prepSec').value = store.get('taichi_prep', String(settings.default_prep_sec || 10));
   phase = 'prep'; showPanel('pPrep');
   openStage('practice', p.name);
 }
@@ -731,7 +934,7 @@ function renderRecChips(){
   $('#rJoints').querySelectorAll('.chip').forEach(c => c.onclick = () => { recJoints.has(c.dataset.k) ? recJoints.delete(c.dataset.k) : recJoints.add(c.dataset.k); renderRecChips(); });
 }
 $('#btnNewPose').onclick = () => {
-  $('#refFloat').hidden = true; $('#rName').value = ''; recJoints = new Set(JKEYS); renderRecChips();
+  $('#refFloat').hidden = true; $('#poseNote').hidden = true; $('#rName').value = ''; recJoints = new Set(JKEYS); renderRecChips();
   phase = 'setup'; showPanel('rSetup'); openStage('record', '录制标准动作');
 };
 $('#btnRec').onclick = () => {
@@ -787,21 +990,21 @@ $('#btnSavePose').onclick = async () => {
     const path = `refs/${rid()}.jpg`;
     const up = await sb.storage.from(BUCKET).upload(path, r.blob, { contentType:'image/jpeg' });
     if(up.error) throw up.error;
-    const ins = await sb.from('taichi_poses').insert({
+    await rpc('taichi_create_pose', { p_pin: teacherPin, p: {
       name: r.name, ref_photo_path: path,
       angles: Object.fromEntries(Object.entries(r.angles).map(([k,v]) => [k, Math.round(v*10)/10])),
-      joints: r.joints, tolerance: 15, hold_ms: 1000, sort_order: poses.length
-    });
-    if(ins.error) throw ins.error;
+      joints: r.joints, tolerance: settings.default_tolerance || 15, hold_ms: settings.default_hold_ms || 1000
+    } });
     toast(`「${r.name}」已保存`); closeStage(); loadPoses();
-  }catch(e){ toast('保存失败：' + (e.message || e)); }
+  }catch(e){ toast('保存失败：' + errMsg(e)); }
   btn.disabled = false; btn.textContent = '保存这个动作';
 };
 
 /* ---------- 启动 ---------- */
 try{ const tb = $('.tabs'); new IntersectionObserver(([e]) => tb.classList.toggle('stuck', e.intersectionRatio < 1), { threshold:[1] }).observe(tb); }catch{}
 applyTeacher();
-loadPoses();
+loadSettings(); loadStudents(); loadPoses();
+if(teacherPin){ sb.rpc('taichi_login', { p_pin: teacherPin }).then(({ data }) => { if(!data?.ok) logoutTeacher(); else { pinDefault = !!data.is_default; applyTeacher(); } }); }
 document.addEventListener('visibilitychange', async () => {
   if(document.visibilityState === 'visible' && running){ try{ wakeLock = await navigator.wakeLock?.request('screen'); }catch{} }
 });
